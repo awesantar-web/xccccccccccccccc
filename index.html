@@ -3,166 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JASI | Cloud Exploit Hub</title>
+    <title>JASI | ELITE CLOUD HUB</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0c;
-            --glass: rgba(15, 15, 18, 0.85);
+            --bg: #050506;
+            --glass: rgba(15, 15, 20, 0.85);
             --accent: #e6192e;
-            --text: #f0f0f0;
-            --text-dim: #888;
+            --accent-glow: rgba(230, 25, 46, 0.4);
+            --text: #ffffff;
+            --text-dim: #a0a0a5;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
         }
 
         body {
-            margin: 0;
-            background: var(--bg);
-            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg);
             color: var(--text);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(230, 25, 46, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(230, 25, 46, 0.05) 0%, transparent 40%);
         }
 
         .navbar {
-            padding: 20px 60px;
+            height: 80px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(230, 25, 46, 0.2);
+            justify-content: space-between;
+            padding: 0 50px;
+            border-bottom: 1px solid var(--border);
             backdrop-filter: blur(20px);
-            position: sticky;
+            position: fixed;
+            width: 100%;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
-        .logo { font-weight: 700; letter-spacing: 2px; color: var(--accent); }
-        .nav-links span { margin-left: 30px; color: var(--text-dim); cursor: pointer; font-size: 0.9rem; text-transform: uppercase; }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-shadow: 0 0 15px var(--accent-glow);
+        }
 
-        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
 
-        .header-panel {
+        .nav-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 120px auto 50px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 30px;
+        }
+
+        .panel {
             background: var(--glass);
+            border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(255,255,255,0.05);
-            text-align: center;
-        }
-
-        .grid { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; }
-
-        /* Upload Form */
-        .upload-card {
-            background: var(--glass);
             padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(230, 25, 46, 0.3);
-            height: fit-content;
+            backdrop-filter: blur(30px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            animation: fadeIn 0.8s ease-out;
         }
 
-        .upload-card h2 { margin-top: 0; font-size: 1.2rem; color: var(--accent); text-transform: uppercase; }
+        h2 {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
 
         input, textarea, select {
             width: 100%;
             background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 12px;
-            border-radius: 8px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 15px;
             color: white;
-            margin-bottom: 15px;
             font-family: inherit;
-            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
         }
 
-        textarea { height: 150px; resize: none; font-family: monospace; }
+        input:focus, textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
 
-        .btn-main {
+        textarea {
+            height: 200px;
+            resize: none;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+
+        .btn {
             width: 100%;
+            padding: 15px;
             background: var(--accent);
             border: none;
+            border-radius: 10px;
             color: white;
-            padding: 12px;
-            border-radius: 8px;
             font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(230, 25, 46, 0.3);
         }
 
-        /* Shared List */
-        .list-card {
-            background: var(--glass);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(230, 25, 46, 0.5);
+            background: #ff1c35;
         }
 
-        .item {
-            background: rgba(255,255,255,0.02);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--accent);
-        }
-
-        .item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .item-name { font-weight: 700; color: #fff; }
-        .item-code { font-family: monospace; font-size: 0.85rem; color: #888; background: black; padding: 10px; border-radius: 6px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-
-        .copy-link {
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--accent);
             color: var(--accent);
-            font-size: 0.75rem;
-            text-decoration: none;
-            text-transform: uppercase;
+            margin-top: 15px;
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .key-display {
+            margin-top: 20px;
+            background: rgba(230, 25, 46, 0.1);
+            border: 1px dashed var(--accent);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Consolas', monospace;
+            font-size: 1.2rem;
+            color: var(--accent);
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.7rem;
             font-weight: 700;
-            cursor: pointer;
+            background: rgba(0, 255, 100, 0.1);
+            color: #00ff64;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
+
     <nav class="navbar">
         <div class="logo">JASI HUB</div>
         <div class="nav-links">
-            <span style="color: var(--accent)">Dashboard</span>
-            <span>Cloud Logs</span>
+            <span class="nav-link active">Dashboard</span>
+            <span class="nav-link">Encrypter</span>
+            <span class="nav-link">Key Gen</span>
+            <span class="nav-link">Community</span>
         </div>
     </nav>
 
     <div class="container">
-        <div class="header-panel">
-            <h1>CLOUD GATEWAY</h1>
-            <p>GitHub Synchronized Payload Delivery</p>
+        <!-- Sidebar: Key Management -->
+        <div class="panel">
+            <h2>License Manager</h2>
+            <div class="status-badge">CLOUD SYNC ACTIVE</div>
+            <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 25px;">Generate and manage premium license keys for the JASI Elite Suite.</p>
+            
+            <div class="input-group">
+                <label>Key Duration</label>
+                <select id="keyDuration">
+                    <option value="Lifetime">Lifetime Access</option>
+                    <option value="30 Days">30 Days (Monthly)</option>
+                    <option value="7 Days">7 Days (Weekly)</option>
+                    <option value="24 Hours">24 Hours (Trial)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>User Role</label>
+                <select id="userRole">
+                    <option value="Elite">Elite Tier</option>
+                    <option value="Phantom">Phantom Tier</option>
+                    <option value="Trial">Trial User</option>
+                </select>
+            </div>
+
+            <button class="btn" onclick="generateKey()">Generate License Key</button>
+            <div id="keyDisplay" class="key-display"></div>
+            
+            <button class="btn btn-secondary" onclick="window.open('https://discord.com/channels/@me')">Open Discord Hub</button>
         </div>
 
-        <div class="grid">
-            <div class="upload-card">
-                <h2>Local Sync</h2>
-                <input type="text" id="scriptName" placeholder="Filename (e.g. exploit.lua)">
-                <textarea id="scriptCode" placeholder="Code to be Encrypted & Shared..."></textarea>
-                <button class="btn-main" onclick="processAndUpload()">Encrypt & Sync</button>
-                
-                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
-                
-                <h2>License Management</h2>
-                <button class="btn-main" style="background: #222; border: 1px solid var(--accent);" onclick="generateKey()">Generate License Key</button>
-                <div id="keyDisplay" style="margin-top: 10px; font-family: monospace; color: var(--accent); font-weight: 700; text-align: center;"></div>
+        <!-- Main Area: Script Encrypter -->
+        <div class="panel">
+            <h2>Script Encrypter & Cloud Sync</h2>
+            <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 25px;">Protect your Lua source code using XOR 0x4F encryption before uploading to GitHub.</p>
+            
+            <div class="input-group">
+                <label>Script Name</label>
+                <input type="text" id="scriptName" placeholder="e.g. Master_Event_Scan.lua">
             </div>
 
-            <div class="list-card">
-                <h2>GitHub Cloud Repository</h2>
-                <div id="sharedList">
-                    <div class="item">
-                        <div class="item-header">
-                            <span class="item-name">Master_Event_Scan.lua (Encrypted)</span>
-                            <span class="copy-link" onclick="copyRawUrl('Master_Event_Scan.lua')">Copy Raw URL</span>
-                        </div>
-                        <div class="item-code">XOR_0x4F_53414a... (Encrypted Data)</div>
-                    </div>
-                </div>
+            <div class="input-group">
+                <label>Source Code (Lua)</label>
+                <textarea id="luaSource" placeholder="-- Paste your raw Lua code here..."></textarea>
             </div>
+
+            <button class="btn" onclick="encryptAndSync()">Encrypt & Upload Shits</button>
         </div>
     </div>
 
+    <div class="footer">
+        &copy; 2024 JASI ELITE | DEVELOPED BY ANTIGRAVITY | STRENGTH IN SECRECY
+    </div>
+
     <script>
-        const SECRET_KEY = 0x4F; // Your JASI Secret Key
+        const LOG_WEBHOOK = "https://canary.discord.com/api/webhooks/1496804510218190918/YUZITMlQDaoe88KcUPKMbT_AqzJJ7zJaYFdz9ebtucxoiqD1MyGt_SlhPQlaJmwkvN6M";
+        const KEY_WEBHOOK = "https://canary.discord.com/api/webhooks/1496809890444742707/S3tTf0jEwLUr3lHXCSkrA0XtRdjky5b7PUdf3XWmZcGj93i0KlGQO27lwqlSvbXu-8Ho";
+        const SECRET_KEY = 0x4F;
 
         function xorEncrypt(text) {
             let res = "";
@@ -172,45 +292,59 @@
             return "XOR_0x4F_" + res;
         }
 
-        function processAndUpload() {
-            const name = document.getElementById('scriptName').value;
-            const code = document.getElementById('scriptCode').value;
-            const webhook = "https://canary.discord.com/api/webhooks/1496804510218190918/YUZITMlQDaoe88KcUPKMbT_AqzJJ7zJaYFdz9ebtucxoiqD1MyGt_SlhPQlaJmwkvN6M";
+        function generateKey() {
+            const duration = document.getElementById('keyDuration').value;
+            const role = document.getElementById('userRole').value;
+            const key = "JASI-" + Math.random().toString(36).substr(2, 4).toUpperCase() + "-" + Math.random().toString(36).substr(2, 4).toUpperCase() + "-" + Math.random().toString(36).substr(2, 4).toUpperCase();
+            
+            const display = document.getElementById('keyDisplay');
+            display.innerText = key;
+            display.style.display = 'block';
 
-            if(!name || !code) return alert("Error: No data to sync.");
-
-            const encrypted = xorEncrypt(code);
+            // Send to Key Gen Webhook
             const payload = {
-                content = "ENCRYPTED CLOUD SYNC\nFilename: " + name + "\nKey: 0x4F\nPayload:\n" + encrypted
+                username: "JASI KEY SYSTEM",
+                embeds: [{
+                    title = "NEW LICENSE GENERATED",
+                    color = 15105570,
+                    fields: [
+                        { name: "Key", value = "`" + key + "`", inline: false },
+                        { name: "Duration", value = duration, inline = true },
+                        { name: "Tier", value = role, inline = true },
+                        { name: "Timestamp", value = new Date().toLocaleString(), inline = false }
+                    ],
+                    footer: { text: "JASI Elite Suite | Key Manager" }
+                }]
             };
 
-            fetch(webhook, {
+            fetch(KEY_WEBHOOK, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             }).then(() => {
-                alert("Successfully encrypted and synced to Discord!");
+                console.log("Key synced to Discord.");
             });
         }
 
-        function copyRawUrl(name) {
-            const url = "https://raw.githubusercontent.com/YOUR_GITHUB_NAME/jasi-hub/main/" + name;
-            navigator.clipboard.writeText(url);
-            alert("URL Copied for JASI Menu!");
-        }
+        function encryptAndSync() {
+            const name = document.getElementById('scriptName').value;
+            const code = document.getElementById('luaSource').value;
 
-        function generateKey() {
-            const key = "JASI-" + Math.random().toString(36).substr(2, 4).toUpperCase() + "-" + Math.random().toString(36).substr(2, 4).toUpperCase();
-            document.getElementById('keyDisplay').innerText = key;
+            if(!name || !code) return alert("Error: Script name and source are required.");
+
+            const encrypted = xorEncrypt(code);
             
-            const webhook = "https://canary.discord.com/api/webhooks/1496804510218190918/YUZITMlQDaoe88KcUPKMbT_AqzJJ7zJaYFdz9ebtucxoiqD1MyGt_SlhPQlaJmwkvN6M";
-            
-            fetch(webhook, {
+            const payload = {
+                username: "JASI CLOUD LOGS",
+                content: "--- NEW UPLOAD DETECTED ---\nNAME: " + name + "\nTIMESTAMP: " + new Date().toLocaleString() + "\nENCRYPTED PAYLOAD:\n```\n" + encrypted + "\n```"
+            };
+
+            fetch(LOG_WEBHOOK, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    content: "NEW LICENSE KEY GENERATED\nKey: " + key + "\nUser: Admin Panel"
-                })
+                body: JSON.stringify(payload)
+            }).then(() => {
+                alert("Script Encrypted and Synced to Logs!");
             });
         }
     </script>
